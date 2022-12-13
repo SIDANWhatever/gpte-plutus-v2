@@ -64,3 +64,12 @@ library
                       , sidan-plutus-server
 
   ghc-options: -fobject-code -fno-ignore-interface-pragmas -fno-omit-interface-pragmas
+
+executable sidan-plutus-server
+   import:           base
+                   , project-config
+                   , maybe-Win32
+   main-is:          Main.hs
+   build-depends:    gpte-plutus-v2
+   hs-source-dirs:   app
+   default-language: Haskell2010

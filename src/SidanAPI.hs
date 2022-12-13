@@ -8,7 +8,6 @@ import qualified GPTE.TreasuryValidator       as TV
 main :: IO ()
 main = SIDAN.createServer app
 
-
 app :: SIDAN.Api
 app = do
   SIDAN.createEndpoint "gpte-escrow" $ SIDAN.mkV2Validator EV.validator
