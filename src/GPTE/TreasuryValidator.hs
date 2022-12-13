@@ -11,7 +11,7 @@
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 
-module GPTE.TreasuryValidator (validator) where
+module GPTE.TreasuryValidator (validator, customValidator) where
 
 -- are all of these necessary?
 
@@ -27,6 +27,10 @@ import PlutusTx
 import PlutusTx.Prelude hiding (Semigroup (..), unless)
 import Prelude (Show (..))
 import qualified Prelude as Pr
+
+import GHC.Generics (Generic)
+import Data.Aeson (FromJSON, ToJSON)
+import SIDANDefaultOrphans()
 
 {-# INLINEABLE treasuryValidator #-}
 treasuryValidator :: TreasuryParam -> TreasuryDatum -> TreasuryAction -> ScriptContext -> Bool
@@ -144,3 +148,19 @@ typedValidator tp = go tp
 
 validator :: TreasuryParam -> Validator
 validator = validatorScript . typedValidator
+
+data MyTreasuryParam = MyTreasuryParam {
+    cTContribTokenPolicyId :: CurrencySymbol
+  , cEscrowContractHash :: ValidatorHash 
+  , cTProjectTokenPolicyId :: CurrencySymbol
+  , cTProjectTokenName :: TokenName
+} deriving (Generic, FromJSON, ToJSON)
+
+customValidator :: MyTreasuryParam -> Validator
+customValidator (MyTreasuryParam a b c d) = validator $ TreasuryParam { 
+    tIssuerPolicyId = CurrencySymbol "2b0a04a7b60132b1805b296c7fcb3b217ff14413991bf76f72663c30"
+  , tContribTokenPolicyId = a
+  , escrowContractHash = b
+  , tProjectTokenPolicyId = c
+  , tProjectTokenName = d
+}
