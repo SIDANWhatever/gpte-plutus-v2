@@ -31,6 +31,9 @@ import PlutusTx.Prelude hiding (Semigroup (..), unless)
 import Prelude (Show (..))
 import qualified Prelude as Pr
 
+import Data.Aeson (FromJSON, ToJSON)
+import SIDANDefaultOrphans()
+
 data TreasuryParam = TreasuryParam
   { tIssuerPolicyId :: !CurrencySymbol,
     tContribTokenPolicyId :: !CurrencySymbol,
@@ -38,7 +41,7 @@ data TreasuryParam = TreasuryParam
     tProjectTokenPolicyId :: !CurrencySymbol,
     tProjectTokenName :: !TokenName
   }
-  deriving (Pr.Eq, Pr.Ord, Show, Generic)
+  deriving (Pr.Eq, Pr.Ord, Show, Generic, FromJSON, ToJSON)
 
 PlutusTx.makeLift ''TreasuryParam
 
@@ -110,7 +113,7 @@ data EscrowParam = EscrowParam
     contribTokenPolicyId :: !CurrencySymbol,
     treasuryIssuerPolicyId :: !CurrencySymbol
   }
-  deriving (Pr.Eq, Pr.Ord, Show, Generic)
+  deriving (Pr.Eq, Pr.Ord, Show, Generic, FromJSON, ToJSON)
 
 PlutusTx.makeLift ''EscrowParam
 

@@ -48,6 +48,7 @@ library
                         GPTE.TreasuryValidator
                         GPTE.EscrowValidator
                         GPTE.Types
+                        SidanAPI
                         -- GPTE.ApprovalMinter
 
   build-depends:        bytestring
@@ -60,5 +61,6 @@ library
                       , plutus-script-utils
                       , serialise
                       , aeson
+                      , sidan-plutus-server
 
   ghc-options: -fobject-code -fno-ignore-interface-pragmas -fno-omit-interface-pragmas
